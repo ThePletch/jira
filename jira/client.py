@@ -919,6 +919,7 @@ class JIRA(object):
             )
         return attachment
 
+
     def delete_attachment(self, id):
         """Delete attachment by id.
 
@@ -1920,8 +1921,9 @@ class JIRA(object):
         :param issue: ID or key of the issue affected
         :param watcher: username of the user to add to the watchers list
         """
+        account_id = self._get_user_accountid(watcher)
         url = self._get_url("issue/" + str(issue) + "/watchers")
-        self._session.post(url, data=json.dumps(watcher))
+        self._session.post(url, data=json.dumps({'accountId': account_id}))
 
     @translate_resource_args
     def remove_watcher(self, issue, watcher):

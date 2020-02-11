@@ -352,7 +352,6 @@ class Resource(object):
             else:
                 r = self._session.put(self.self, data=json.dumps(data))
 
-        time.sleep(self._options["delay_reload"])
         self._load(self.self)
 
     def delete(self, params=None):
