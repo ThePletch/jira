@@ -1923,7 +1923,7 @@ class JIRA(object):
         """
         account_id = self._get_user_accountid(watcher)
         url = self._get_url("issue/" + str(issue) + "/watchers")
-        self._session.post(url, data=json.dumps({'accountId': account_id}))
+        self._session.post(url, data='"' + account_id + '"')
 
     @translate_resource_args
     def remove_watcher(self, issue, watcher):
