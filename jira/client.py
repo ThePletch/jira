@@ -1570,7 +1570,7 @@ class JIRA(object):
 
     # non-resource
     @translate_resource_args
-    def assign_issue(self, issue, assignee):
+    def assign_issue(self, issue, assignee, by_account_id=False):
         """Assign an issue to a user. None will set it to unassigned. -1 will set it to Automatic.
 
         :param issue: the issue ID or key to assign
@@ -1586,7 +1586,12 @@ class JIRA(object):
             + str(issue)
             + "/assignee"
         )
-        payload = {"accountId": self._get_user_accountid(assignee)}
+        if by_account_id:
+            account_id = assignee
+        else:
+            account_id = self._get_user_accountid(assignee)
+
+        payload = {"accountId": account_id}
         # 'key' and 'name' are deprecated in favor of accountId
         r = self._session.put(url, data=json.dumps(payload))
         raise_on_error(r)
