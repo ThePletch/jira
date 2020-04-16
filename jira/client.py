@@ -1570,7 +1570,6 @@ class JIRA(object):
             return lookup_results['results'][0]['accountId']
         except Exception as e:
             raise JIRAError(e)
-        return accountId
 
     # non-resource
     @translate_resource_args
