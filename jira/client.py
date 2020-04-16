@@ -1563,7 +1563,11 @@ class JIRA(object):
     def _get_user_accountid(self, user):
         """Internal method for translating an user to an accountId."""
         try:
-            accountId = self.search_users(user, maxResults=1)[0].accountId
+            # use this url base instead since the default prefixes all urls with
+            # /rest/api/2/
+            url_base = '{server}/{path}'
+            lookup_results = self._get_json('wiki/rest/api/user/bulk/migration', base=url_base, params={'username': user})
+            return lookup_results['results'][0]['accountId']
         except Exception as e:
             raise JIRAError(e)
         return accountId
